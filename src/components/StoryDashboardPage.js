@@ -3,10 +3,10 @@ import StoryList from './StoryList';
 // import ExpenseListFilters from './ExpenseListFilters';
 // import ExpensesSummary from './ExpensesSummary';
 
-const DashboardPage = () => (
+const StoryDashboardPage = () => (
   <div>
-    <StoryList />
+    <ExpenseList />
   </div>
 );
 
-export default DashboardPage;
+export default ExpenseDashboardPage;

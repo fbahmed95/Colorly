@@ -3,12 +3,7 @@ DATA:
 users : {
   user_uid : {
     collections : {
-      general : {
-        object_id : {
-          img_url: "urlstring",
-          collection_origin: collection_id,
-          user_origin: user_uid
-        },
+      all : {
         object_id : {
           colors : [],
           title: "string",
@@ -16,13 +11,9 @@ users : {
           collection_orign: collection_id,
           user_origin: user_uid         
         },
-      }
+      },
       collection_id : {
-        object_id : {
-          img_url: "urlstring",
-          collection_origin: collection_id,
-          user_origin: user_uid
-        },
+        collection_name: "string",
         object_id : {
           colors : [],
           title: "string",
@@ -35,6 +26,10 @@ users : {
     }
   }
 }
+
+
+
+
 
 color_stories : {
   object_id: {

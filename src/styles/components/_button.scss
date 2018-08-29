@@ -1,7 +1,6 @@
 .button {
-  background: $blue;
   border: none;
-  color: white;
+  color: black;
   display: inline-block;
   font-size: $font-size-large;
   font-weight: 300;
@@ -47,7 +46,7 @@
 }
 
 .btn:hover {
-  background-position: right center; 
+  background-position: right center;
   opacity: 1;
   cursor: pointer;
 }
