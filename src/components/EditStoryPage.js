@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import StoryForm from './StoryForm';
 import { startEditStory, startRemoveStory} from '../actions/stories';
 import { convertToRGB } from '../selectors/convertToRGB';
+import { generateColorSeed, generateMode } from '../selectors/generateColorSeed';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
 var demoColorPicker;
 var selectedElement;
 
@@ -11,8 +15,13 @@ export class EditStoryPage extends React.Component {
     super(props);
 
     this.state = {
-      pText: props.story ? "#" + convertToRGB(props.story.pText).toUpperCase() : '#FFFFFF'
+      pText: props.story ? "#" + convertToRGB(props.story.pText).toUpperCase() : '#FFFFFF',
+      dropdownOpen: false
     };
+
+    this.toggle = this.toggle.bind(this);
+    this.colorRandomAPICall = this.colorRandomAPICall.bind(this);
+    this.colorSchemeAPICall = this.colorSchemeAPICall.bind(this);
 
   };
   onSubmit = (story) => {
@@ -93,6 +102,57 @@ export class EditStoryPage extends React.Component {
       document.getElementById("color-val").style.color = "black";
     }
   }
+  setColorBoxes = (generatedColors) => {
+    var allBoxes = document.getElementsByClassName('color');
+    var index = 0;
+    for(var box of allBoxes){
+      box.style.backgroundColor = generatedColors[index];
+      index++;
+    }
+    console.log(allBoxes[0].style.backgroundColor);
+  }
+
+  colorRandomAPICall = () => {
+    var seed = generateColorSeed();
+    var mode = generateMode();
+    var url = 'http://www.thecolorapi.com/scheme?hex=' + seed + '&format=json&mode='
+              + mode + '&count=5';
+    axios.get(url)
+        .then(response => {
+          var generatedColors = [];
+          var resColors = response.data.colors;
+          resColors.map((color) => {
+            generatedColors.push(color.hex.value);
+            console.log(color.hex.value);
+          });
+          this.setColorBoxes(generatedColors);
+        }
+        );
+
+  }
+  colorSchemeAPICall = (mode) => {
+    var seed = generateColorSeed();
+    var url = 'http://www.thecolorapi.com/scheme?hex=' + seed + '&format=json&mode='
+              + mode + '&count=5';
+    axios.get(url)
+        .then(response => {
+          var generatedColors = [];
+          var resColors = response.data.colors;
+          resColors.map((color) => {
+            generatedColors.push(color.hex.value);
+            console.log(color.hex.value);
+          });
+          this.setColorBoxes(generatedColors);
+        }
+        );
+
+  }
+
+  toggle() {
+  this.setState({
+    dropdownOpen: !this.state.dropdownOpen
+  });
+  }
 
 
 
@@ -110,9 +170,21 @@ export class EditStoryPage extends React.Component {
                   onChange={this.onColorValChange}
                   style={{color: this.props.story.pText}}
                   ></input>
-            <button>randomize</button>
-            <button>scheme</button>
-            <button>upload image</button>
+                  <button onClick={this.colorRandomAPICall}>randomize</button>
+                  <ButtonDropdown direction="right" isOpen={this.state.btnDropright} toggle={() => { this.setState({ btnDropright: !this.state.btnDropright }); }}>
+                    <DropdownToggle caret>
+                      Dropright
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem onClick={() => this.colorSchemeAPICall('monochrome')}>monochrome</DropdownItem>
+                      <DropdownItem onClick={() => this.colorSchemeAPICall('analogic')}>analogic</DropdownItem>
+                      <DropdownItem onClick={() => this.colorSchemeAPICall('complement')}>complement</DropdownItem>
+                      <DropdownItem onClick={() => this.colorSchemeAPICall('analogic')}>analogic-complement</DropdownItem>
+                      <DropdownItem onClick={() => this.colorSchemeAPICall('triad')}>triad</DropdownItem>
+                      <DropdownItem onClick={() => this.colorSchemeAPICall('quad')}>quad</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                <button>upload image</button>
           </div>
         </div>
         <div id="bottom-wrapper">
