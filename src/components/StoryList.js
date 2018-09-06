@@ -11,7 +11,7 @@ export const StoryList = (props) => (
           <div className="list-item list-item--message">
             <span>No Stories</span>
           </div>
-        ) : (          
+        ) : (
             props.stories.map((story) => {
               return <StoryListItem key={story.id} {...story} />;
             })
@@ -19,25 +19,6 @@ export const StoryList = (props) => (
       }
   </div>
 );
-
-
-// export const StoryList = (props) => (
-//   <div className="content-container">
-//     <div className="list-body">
-//       {
-//         props.stories.length === 0 ? (
-//           <div className="list-item list-item--message">
-//             <span>No Stories</span>
-//           </div>
-//         ) : (
-//             props.stories.map((story) => {
-//               return <StoryListItem key={story.id} {...story} />;
-//             })
-//           )
-//       }
-//     </div>
-//   </div>
-// );
 
 const mapStateToProps = (state) => {
   return {

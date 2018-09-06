@@ -2,34 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import StoryForm from './StoryForm';
 import { startAddStory } from '../actions/stories';
-import { convertToRGB } from '../selectors/convertToRGB'
-// import {colorPicker} from '../selectors/selectColor';
-// import iro from "@jaames/iro";
-
-// var iro = require("@jaames/iro");
-
-// export default iro.ColorPicker("#color-picker-container", {
-//   width: 250,
-//   height: 250,
-//   color: {r: 255 , g: 255, b: 255},
-//   markerRadius: 8,
-//   padding: 4,
-//   sliderMargin: 24,
-//   sliderHeight: 16,
-//   borderWidth: 0,
-//   borderColor: "#fff",
-//   anticlockwise: true,
-// });
+import { convertToRGB } from '../selectors/convertToRGB';
+import { generateColorSeed, generateMode } from '../selectors/generateColorSeed';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import axios from 'axios';
 
 var demoColorPicker;
 var selectedElement;
 export class AddStoryPage extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       pText: props.pText ? props.pText : '#FFFFFF',
+      dropdownOpen: false
     };
+
+    this.toggle = this.toggle.bind(this);
+    this.colorRandomAPICall = this.colorRandomAPICall.bind(this);
+    this.colorSchemeAPICall = this.colorSchemeAPICall.bind(this);
+
   }
 
   onSubmit = (story) => {
@@ -86,8 +77,6 @@ export class AddStoryPage extends React.Component {
         document.getElementById("color-val").style.color = "black";
       }
       selectedElement.style.backgroundColor = pText;
-
-      // selectedElement.style.backgroundColor = hexString;
     });
 
   }
@@ -104,9 +93,58 @@ export class AddStoryPage extends React.Component {
       document.getElementById("color-val").style.color = "black";
     }
   }
+  setColorBoxes = (generatedColors) => {
+    var allBoxes = document.getElementsByClassName('color');
+    var index = 0;
+    for(var box of allBoxes){
+      box.style.backgroundColor = generatedColors[index];
+      index++;
+    }
+    console.log(allBoxes[0].style.backgroundColor);
+  }
 
+  colorRandomAPICall = () => {
+    var seed = generateColorSeed();
+    var mode = generateMode();
+    var url = 'http://www.thecolorapi.com/scheme?hex=' + seed + '&format=json&mode='
+              + mode + '&count=5';
+    axios.get(url)
+        .then(response => {
+          var generatedColors = [];
+          var resColors = response.data.colors;
+          resColors.map((color) => {
+            generatedColors.push(color.hex.value);
+            console.log(color.hex.value);
+          });
+          this.setColorBoxes(generatedColors);
+        }
+        );
 
-  // render(
+  }
+  colorSchemeAPICall = (mode) => {
+    var seed = generateColorSeed();
+    var url = 'http://www.thecolorapi.com/scheme?hex=' + seed + '&format=json&mode='
+              + mode + '&count=5';
+    axios.get(url)
+        .then(response => {
+          var generatedColors = [];
+          var resColors = response.data.colors;
+          resColors.map((color) => {
+            generatedColors.push(color.hex.value);
+            console.log(color.hex.value);
+          });
+          this.setColorBoxes(generatedColors);
+        }
+        );
+
+  }
+
+  toggle() {
+  this.setState({
+    dropdownOpen: !this.state.dropdownOpen
+  });
+  }
+
   render(){
     return(
       <div id="wrapper">
@@ -114,8 +152,20 @@ export class AddStoryPage extends React.Component {
           <div id="color-picker-container" onClick={this.onColorPickerChange}></div>
           <div id="options">
             <input type="text" id="color-val" value={this.state.pText} onChange={this.onColorValChange}></input>
-            <button>randomize</button>
-            <button>scheme</button>
+              <button onClick={this.colorRandomAPICall}>randomize</button>
+              <ButtonDropdown direction="right" isOpen={this.state.btnDropright} toggle={() => { this.setState({ btnDropright: !this.state.btnDropright }); }}>
+                <DropdownToggle caret>
+                  Dropright
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={() => this.colorSchemeAPICall('monochrome')}>monochrome</DropdownItem>
+                  <DropdownItem onClick={() => this.colorSchemeAPICall('analogic')}>analogic</DropdownItem>
+                  <DropdownItem onClick={() => this.colorSchemeAPICall('complement')}>complement</DropdownItem>
+                  <DropdownItem onClick={() => this.colorSchemeAPICall('analogic')}>analogic-complement</DropdownItem>
+                  <DropdownItem onClick={() => this.colorSchemeAPICall('triad')}>triad</DropdownItem>
+                  <DropdownItem onClick={() => this.colorSchemeAPICall('quad')}>quad</DropdownItem>
+                </DropdownMenu>
+              </ButtonDropdown>
             <button>upload image</button>
           </div>
         </div>
@@ -145,6 +195,14 @@ export class AddStoryPage extends React.Component {
 
 
 }
+
+// <DropdownItem onClick={this.colorSchemeAPICall('monochrome')}>monochrome</DropdownItem>
+// <DropdownItem onClick={this.colorSchemeAPICall('analogic')}>analogic</DropdownItem>
+// <DropdownItem onClick={this.colorSchemeAPICall('complement')}>complement</DropdownItem>
+// <DropdownItem onClick={this.colorSchemeAPICall('analogic-complement')}>analogic-complement</DropdownItem>
+// <DropdownItem onClick={this.colorSchemeAPICall('triad')}>triad</DropdownItem>
+// <DropdownItem onClick={this.colorSchemeAPICall('quad')}>quad</DropdownItem>
+
 
 const mapDispatchToProps = (dispatch) => ({
   startAddStory: (story) => dispatch(startAddStory(story))

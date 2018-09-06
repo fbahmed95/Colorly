@@ -10,7 +10,7 @@ export const Header = ({ startLogout }) => (
         <Link className="header__title" to="/dashboard">
           <h1>COLOR.LY</h1>
         </Link>
-        <button className="button" >Create</button>
+        <Link to="/create"><button className="button" >Create</button></Link>
         <button className="button" >Stories</button>
         <button className="button" onClick={startLogout}>Logout</button>
       </div>

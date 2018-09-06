@@ -2,9 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import StoryForm from './StoryForm';
 import { startEditStory, startRemoveStory} from '../actions/stories';
-import { convertToRGB } from '../selectors/convertToRGB'
- // import iro from "@jaames/iro";
-
+import { convertToRGB } from '../selectors/convertToRGB';
 var demoColorPicker;
 var selectedElement;
 
@@ -15,6 +13,7 @@ export class EditStoryPage extends React.Component {
     this.state = {
       pText: props.story ? "#" + convertToRGB(props.story.pText).toUpperCase() : '#FFFFFF'
     };
+
   };
   onSubmit = (story) => {
     this.props.startEditStory(this.props.story.id, story);
@@ -38,6 +37,10 @@ export class EditStoryPage extends React.Component {
         anticlockwise: true,
       });
     selectedElement = document.getElementById("first");
+
+
+
+
   };
 
   onColorValChange = (e) => {
@@ -74,7 +77,6 @@ export class EditStoryPage extends React.Component {
       }
       selectedElement.style.backgroundColor = pText;
 
-      // selectedElement.style.backgroundColor = hexString;
     });
 
   }
@@ -91,6 +93,8 @@ export class EditStoryPage extends React.Component {
       document.getElementById("color-val").style.color = "black";
     }
   }
+
+
 
 
   // render(

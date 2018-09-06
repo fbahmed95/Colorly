@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 import database from '../firebase/firebase';
 
-// ADD_EXPENSE
+// ADD_STORY
 export const addStory = (story) => ({
   type: 'ADD_STORY',
   story
@@ -28,7 +28,7 @@ export const startAddStory = (storyData = {}) => {
 };
 
 
-// REMOVE_EXPENSE
+// REMOVE_STORY
 export const removeStory = ({ id } = {}) => ({
   type: 'REMOVE_STORY',
   id
@@ -43,7 +43,7 @@ export const startRemoveStory = ({ id } = {}) => {
   };
 };
 
-// EDIT_EXPENSE
+// EDIT_STORY
 export const editStory = (id, updates) => ({
   type: 'EDIT_STORY',
   id,
@@ -59,7 +59,8 @@ export const startEditStory = (id, updates) => {
   };
 };
 
-// SET_EXPENSES
+// SET_STORIES
+
 export const setStories = (stories) => ({
   type: 'SET_STORIES',
   stories

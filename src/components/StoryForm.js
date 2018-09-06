@@ -32,18 +32,9 @@ export default class StoryForm extends React.Component {
     this.setState(() => ({ colors }));
 
   }
-  // onColorsChange = (e) => {
-  //   const colors = e.target.value.split(',');
-  //   this.setState(() => ({ colors }));
-  // };
 
   onSubmit = (e) => {
     e.preventDefault();
-
-    // if (!this.state.title || !this.state.colors) {
-    //   this.setState(() => ({ error: 'Please provide title and colors.' }));
-    // } else {
-    //   this.setState(() => ({ error: '' }));
 
       this.props.onSubmit({
         title: this.state.title,
@@ -51,7 +42,6 @@ export default class StoryForm extends React.Component {
         colors: this.state.colors,
         pText: this.state.colors[0]
       });
-    // }
   };
   render() {
     return (

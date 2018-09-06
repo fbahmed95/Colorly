@@ -2,16 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-// const StoryListItem = ({ id, title, tags, colors}) => (
-//   <Link className="list-item" to={'/edit/' + id}>
-//     <div>
-//       <h3 className="list-item__title">{title}</h3>
-//     </div>
-//     <h3 className="list-item__data">{tags}</h3>
-//     <h3 className="list-item__data" style={{color: colors[0] }} >{colors[0]}</h3>
-//   </Link>
-// );
 const StoryListItem = ({ id, title, tags, colors}) => (
   <div className="card">
     <div className="card-colors">
