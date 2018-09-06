@@ -7,19 +7,19 @@ export default (state = storiesReducerDefaultState, action) => {
         ...state,
         action.story
       ];
-    // case 'REMOVE_EXPENSE':
-    //   return state.filter(({id}) => id !== action.id);
-    // case 'EDIT_EXPENSE':
-    //   return state.map((expense) => {
-    //     if(expense.id === action.id){
-    //       return {
-    //         ...expense,
-    //         ...action.updates
-    //       }
-    //     } else {
-    //       return expense;
-    //     }
-    //   });
+    case 'REMOVE_STORY':
+      return state.filter(({id}) => id !== action.id);
+    case 'EDIT_STORY':
+      return state.map((story) => {
+        if(story.id === action.id){
+          return {
+            ...story,
+            ...action.updates
+          }
+        } else {
+          return story;
+        }
+      });
     case 'SET_STORIES':
       return action.stories;
     default:

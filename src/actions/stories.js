@@ -14,8 +14,9 @@ export const startAddStory = (storyData = {}) => {
       title = '',
       tags = [],
       colors = [],
+      pText = ''
     } = storyData;
-    const story = { title, tags, colors};
+    const story = { title, tags, colors, pText};
 
     return database.ref('users/' + uid + '/stories').push(story).then((ref) => {
       dispatch(addStory({
@@ -26,37 +27,38 @@ export const startAddStory = (storyData = {}) => {
   };
 };
 
-// // REMOVE_EXPENSE
-// export const removeExpense = ({ id } = {}) => ({
-//   type: 'REMOVE_EXPENSE',
-//   id
-// });
-//
-// export const startRemoveExpense = ({ id } = {}) => {
-//   return (dispatch, getState) => {
-//     const uid = getState().auth.uid;
-//     return database.ref('users/' + uid + '/expenses' + id).remove().then(() => {
-//       dispatch(removeExpense({ id }));
-//     });
-//   };
-// };
-//
-// // EDIT_EXPENSE
-// export const editExpense = (id, updates) => ({
-//   type: 'EDIT_EXPENSE',
-//   id,
-//   updates
-// });
-//
-// export const startEditExpense = (id, updates) => {
-//   return (dispatch, getState) => {
-//     const uid = getState().auth.uid;
-//     return database.ref('users/'  + uid + '/expenses/' + id).update(updates).then(() => {
-//       dispatch(editExpense(id, updates));
-//     });
-//   };
-// };
-//
+
+// REMOVE_EXPENSE
+export const removeStory = ({ id } = {}) => ({
+  type: 'REMOVE_STORY',
+  id
+});
+
+export const startRemoveStory = ({ id } = {}) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/stories/${id}`).remove().then(() => {
+      dispatch(removeStory({ id }));
+    });
+  };
+};
+
+// EDIT_EXPENSE
+export const editStory = (id, updates) => ({
+  type: 'EDIT_STORY',
+  id,
+  updates
+});
+
+export const startEditStory = (id, updates) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref('users/'  + uid + '/stories/' + id).update(updates).then(() => {
+      dispatch(editStory(id, updates));
+    });
+  };
+};
+
 // SET_EXPENSES
 export const setStories = (stories) => ({
   type: 'SET_STORIES',

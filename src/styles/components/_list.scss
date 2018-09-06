@@ -1,63 +1,120 @@
-.list-header {
-  background: $off-white;
-  border: 1px solid darken($off-white, 7%);
-  color: $grey;
+// .list-header {
+//   background: $off-white;
+//   border: 1px solid darken($off-white, 7%);
+//   color: $grey;
+//   display: flex;
+//   justify-content: space-between;
+//   padding: $s-size $m-size;
+// }
+//
+// .list-body {
+//   margin-bottom: $m-size;
+//   @media (min-width: $desktop-breakpoint) {
+//     margin-bottom: $l-size;
+//   }
+// }
+//
+// .list-item {
+//   border: 1px solid darken($off-white, 7%);
+//   border-top: none;
+//   color: $dark-grey;
+//   display: flex;
+//   flex-direction: column;
+//   padding: $s-size;
+//   text-decoration: none;
+//   transition: background .3s ease;
+//   &:hover {
+//     background: $off-white;
+//   }
+//   @media (min-width: $desktop-breakpoint) {
+//     align-items: center;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     padding: $m-size;
+//   }
+// }
+//
+// .list-item--message {
+//   align-items: center;
+//   color: $grey;
+//   justify-content: center;
+//   padding: $m-size;
+//   &:hover {
+//     background: none;
+//   }
+// }
+//
+// .list-item__title {
+//   margin: 0;
+//   word-break: break-all;
+// }
+//
+// .list-item__sub-title {
+//   color: $grey;
+//   font-size: $font-size-small;
+// }
+//
+// .list-item__data {
+//   margin: $s-size 0 0 0;
+//   @media (min-width: $desktop-breakpoint) {
+//     margin: 0;
+//     padding-left: $s-size;
+//   }
+// }
+
+.story-list-container{
   display: flex;
-  justify-content: space-between;
-  padding: $s-size $m-size;
-}
-
-.list-body {
-  margin-bottom: $m-size;
-  @media (min-width: $desktop-breakpoint) {
-    margin-bottom: $l-size;
-  }
-}
-
-.list-item {
-  border: 1px solid darken($off-white, 7%);
-  border-top: none;
-  color: $dark-grey;
-  display: flex;
-  flex-direction: column;
-  padding: $s-size;
-  text-decoration: none;
-  transition: background .3s ease;
-  &:hover {
-    background: $off-white;
-  }
-  @media (min-width: $desktop-breakpoint) {
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: $m-size;
-  }
-}
-
-.list-item--message {
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  color: $grey;
-  justify-content: center;
-  padding: $m-size;
-  &:hover {
-    background: none;
-  }
+  align-content: space-between;
+  margin: auto;
+  width: 70%;
 }
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700,800');
 
-.list-item__title {
+.card{
+  width: 200px;
+  height: 250px;
+  border-color: #D8D8D8;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5%;
+  box-shadow: 2px 2px 5px #B9B9B9;
+  font-family: 'Open Sans', sans-serif;
+}
+.card-colors{
+  height: 65%;
+  border-radius: 5% 5% 0 0;
+  display: flex;
+  overflow: hidden;
+
+}
+.color{
+  height: auto;
+  width: 20%;
+}
+.card-description{
+  height: 35%;
+}
+.card-title{
+  width: 50%;
+}
+.card-title p{
   margin: 0;
-  word-break: break-all;
+  padding: 2px 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
-
-.list-item__sub-title {
-  color: $grey;
-  font-size: $font-size-small;
+.card-bottom{
+  width: 100%;
+  text-align: right;
+  margin: 0;
 }
-
-.list-item__data {
-  margin: $s-size 0 0 0;
-  @media (min-width: $desktop-breakpoint) {
-    margin: 0;
-    padding-left: $s-size;
-  }
+.card-bottom p {
+  margin: 0;
+  padding: 10px;
+  font-weight: 300;
+  color: #7E7E7E;
 }
