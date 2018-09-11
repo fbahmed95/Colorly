@@ -6,7 +6,7 @@ import { convertToRGB } from '../selectors/convertToRGB';
 import { generateColorSeed, generateMode } from '../selectors/generateColorSeed';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import axios from 'axios';
-
+import * as Vibrant from 'node-vibrant'
 var demoColorPicker;
 var selectedElement;
 export class AddStoryPage extends React.Component {
@@ -14,12 +14,16 @@ export class AddStoryPage extends React.Component {
     super(props);
     this.state = {
       pText: props.pText ? props.pText : '#FFFFFF',
-      dropdownOpen: false
+      dropdownOpen: false,
+      selectedFile: null,
+      imagePreviewUrl: null
     };
 
     this.toggle = this.toggle.bind(this);
     this.colorRandomAPICall = this.colorRandomAPICall.bind(this);
     this.colorSchemeAPICall = this.colorSchemeAPICall.bind(this);
+    this.uploadHandler = this.uploadHandler.bind(this);
+    this.fileChangedHandler = this.fileChangedHandler.bind(this);
 
   }
 
@@ -43,6 +47,20 @@ export class AddStoryPage extends React.Component {
       });
     selectedElement = document.getElementById("first");
   };
+  // componentDidUpdate(prevProps) {
+  // // Typical usage (don't forget to compare props):
+  // console.log(prevProps);
+  //   if(document.getElementById('img').src === this.props.imagePreviewUrl){
+  //     var vibrant = new Vibrant(img);
+  //     console.log('vibrant', vibrant);
+  //     var swatches = vibrant.swatches()
+  //     console.log('swatches', swatches);
+  //     for (var swatch in swatches)
+  //         if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+  //             console.log(swatch, swatches[swatch].getHex())
+  //
+  //   }
+  // }
 
   onColorValChange = (e) => {
     var pText = e.target.value;
@@ -144,10 +162,67 @@ export class AddStoryPage extends React.Component {
     dropdownOpen: !this.state.dropdownOpen
   });
   }
+  uploadHandler(e) {
+    e.preventDefault();
+    // TODO: do something with -> this.state.file
+    //console.log(this.state.imagePreviewUrl);
+    var img = document.getElementById('img');
+    img.setAttribute('src', this.state.imagePreviewUrl);
+    Vibrant.from(img.src).getPalette()
+    .then((palette) => {
+          var generatedColors = [];
+          for (var swatch in palette){
+            if (palette.hasOwnProperty(swatch) && palette[swatch]){
+                console.log(swatch, palette[swatch].getHex());
+                generatedColors.push(palette[swatch].getHex());
+            }
+          }
+          this.setColorBoxes(generatedColors);
+
+
+    });
+
+    // img.addEventListener('load', function() {
+    //     var vibrant = new Vibrant(img);
+    //     console.log('vibrant', vibrant);
+    //     var swatches = vibrant.swatches()
+    //     console.log('swatches', swatches);
+    //     for (var swatch in swatches)
+    //         if (swatches.hasOwnProperty(swatch) && swatches[swatch])
+    //             console.log(swatch, swatches[swatch].getHex())
+    //
+    //     /*
+    //      * Results into:
+    //      * Vibrant #7a4426
+    //      * Muted #7b9eae
+    //      * DarkVibrant #348945
+    //      * DarkMuted #141414
+    //      * LightVibrant #f3ccb4
+    //      */
+    // });
+}
+
+  fileChangedHandler(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        selectedFile: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
+
 
   render(){
     return(
       <div id="wrapper">
+        <img id="img" src="" style={{ display: 'none' }}/>
         <div id="top-wrapper">
           <div id="color-picker-container" onClick={this.onColorPickerChange}></div>
           <div id="options">
@@ -166,7 +241,8 @@ export class AddStoryPage extends React.Component {
                   <DropdownItem onClick={() => this.colorSchemeAPICall('quad')}>quad</DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
-            <button>upload image</button>
+              <input type="file" onChange={this.fileChangedHandler}></input>
+              <button onClick={this.uploadHandler}>upload image</button>
           </div>
         </div>
         <div id="bottom-wrapper">

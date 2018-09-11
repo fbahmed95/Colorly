@@ -22,8 +22,9 @@ export const StoryList = (props) => (
 
 const mapStateToProps = (state) => {
   return {
-    stories: selectStories(state.stories)
+    stories: selectStories(state.stories, state.filters)
   };
 };
+
 
 export default connect(mapStateToProps)(StoryList);
