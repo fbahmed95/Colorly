@@ -6,6 +6,7 @@ import { startEditStory, startRemoveStory} from '../actions/stories';
 import { convertToRGB } from '../selectors/convertToRGB';
 import { generateColorSeed, generateMode } from '../selectors/generateColorSeed';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import * as Vibrant from 'node-vibrant'
 
 var demoColorPicker;
 var selectedElement;
@@ -22,6 +23,8 @@ export class EditStoryPage extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.colorRandomAPICall = this.colorRandomAPICall.bind(this);
     this.colorSchemeAPICall = this.colorSchemeAPICall.bind(this);
+    this.uploadHandler = this.uploadHandler.bind(this);
+    this.fileChangedHandler = this.fileChangedHandler.bind(this);
 
   };
   onSubmit = (story) => {
@@ -154,7 +157,43 @@ export class EditStoryPage extends React.Component {
   });
   }
 
+  uploadHandler(e) {
+    e.preventDefault();
+    // TODO: do something with -> this.state.file
+    //console.log(this.state.imagePreviewUrl);
+    var img = document.getElementById('img');
+    img.setAttribute('src', this.state.imagePreviewUrl);
+    Vibrant.from(img.src).getPalette()
+    .then((palette) => {
+          var generatedColors = [];
+          for (var swatch in palette){
+            if (palette.hasOwnProperty(swatch) && palette[swatch]){
+                console.log(swatch, palette[swatch].getHex());
+                generatedColors.push(palette[swatch].getHex());
+            }
+          }
+          this.setColorBoxes(generatedColors);
 
+
+    });
+
+}
+
+  fileChangedHandler(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        selectedFile: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file)
+  }
 
 
   // render(
@@ -170,10 +209,10 @@ export class EditStoryPage extends React.Component {
                   onChange={this.onColorValChange}
                   style={{color: this.props.story.pText}}
                   ></input>
-                  <button onClick={this.colorRandomAPICall}>randomize</button>
-                  <ButtonDropdown direction="right" isOpen={this.state.btnDropright} toggle={() => { this.setState({ btnDropright: !this.state.btnDropright }); }}>
-                    <DropdownToggle caret>
-                      Dropright
+                  <button onClick={this.colorRandomAPICall} className="create-btn">randomize</button>
+                  <ButtonDropdown className="create-btn" direction="right" isOpen={this.state.btnDropright} toggle={() => { this.setState({ btnDropright: !this.state.btnDropright }); }}>
+                    <DropdownToggle caret className="my-create-btn" style={{ width: '100%' }}>
+                      scheme
                     </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem onClick={() => this.colorSchemeAPICall('monochrome')}>monochrome</DropdownItem>
@@ -184,7 +223,8 @@ export class EditStoryPage extends React.Component {
                       <DropdownItem onClick={() => this.colorSchemeAPICall('quad')}>quad</DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
-                <button>upload image</button>
+                  <input type="file" onChange={this.fileChangedHandler}></input>
+                  <button onClick={this.uploadHandler} className="create-btn">upload image</button>
           </div>
         </div>
         <div id="bottom-wrapper">

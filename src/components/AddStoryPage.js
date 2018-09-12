@@ -47,20 +47,6 @@ export class AddStoryPage extends React.Component {
       });
     selectedElement = document.getElementById("first");
   };
-  // componentDidUpdate(prevProps) {
-  // // Typical usage (don't forget to compare props):
-  // console.log(prevProps);
-  //   if(document.getElementById('img').src === this.props.imagePreviewUrl){
-  //     var vibrant = new Vibrant(img);
-  //     console.log('vibrant', vibrant);
-  //     var swatches = vibrant.swatches()
-  //     console.log('swatches', swatches);
-  //     for (var swatch in swatches)
-  //         if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-  //             console.log(swatch, swatches[swatch].getHex())
-  //
-  //   }
-  // }
 
   onColorValChange = (e) => {
     var pText = e.target.value;
@@ -182,24 +168,6 @@ export class AddStoryPage extends React.Component {
 
     });
 
-    // img.addEventListener('load', function() {
-    //     var vibrant = new Vibrant(img);
-    //     console.log('vibrant', vibrant);
-    //     var swatches = vibrant.swatches()
-    //     console.log('swatches', swatches);
-    //     for (var swatch in swatches)
-    //         if (swatches.hasOwnProperty(swatch) && swatches[swatch])
-    //             console.log(swatch, swatches[swatch].getHex())
-    //
-    //     /*
-    //      * Results into:
-    //      * Vibrant #7a4426
-    //      * Muted #7b9eae
-    //      * DarkVibrant #348945
-    //      * DarkMuted #141414
-    //      * LightVibrant #f3ccb4
-    //      */
-    // });
 }
 
   fileChangedHandler(e) {
@@ -227,10 +195,10 @@ export class AddStoryPage extends React.Component {
           <div id="color-picker-container" onClick={this.onColorPickerChange}></div>
           <div id="options">
             <input type="text" id="color-val" value={this.state.pText} onChange={this.onColorValChange}></input>
-              <button onClick={this.colorRandomAPICall}>randomize</button>
-              <ButtonDropdown direction="right" isOpen={this.state.btnDropright} toggle={() => { this.setState({ btnDropright: !this.state.btnDropright }); }}>
-                <DropdownToggle caret>
-                  Dropright
+              <button onClick={this.colorRandomAPICall} className="create-btn">randomize</button>
+              <ButtonDropdown className="create-btn" direction="right" isOpen={this.state.btnDropright} toggle={() => { this.setState({ btnDropright: !this.state.btnDropright }); }}>
+                <DropdownToggle caret className="my-create-btn" style={{ width: '100%' }}>
+                  scheme
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem onClick={() => this.colorSchemeAPICall('monochrome')}>monochrome</DropdownItem>
@@ -242,7 +210,7 @@ export class AddStoryPage extends React.Component {
                 </DropdownMenu>
               </ButtonDropdown>
               <input type="file" onChange={this.fileChangedHandler}></input>
-              <button onClick={this.uploadHandler}>upload image</button>
+              <button onClick={this.uploadHandler} className="create-btn">upload image</button>
           </div>
         </div>
         <div id="bottom-wrapper">
@@ -271,13 +239,6 @@ export class AddStoryPage extends React.Component {
 
 
 }
-
-// <DropdownItem onClick={this.colorSchemeAPICall('monochrome')}>monochrome</DropdownItem>
-// <DropdownItem onClick={this.colorSchemeAPICall('analogic')}>analogic</DropdownItem>
-// <DropdownItem onClick={this.colorSchemeAPICall('complement')}>complement</DropdownItem>
-// <DropdownItem onClick={this.colorSchemeAPICall('analogic-complement')}>analogic-complement</DropdownItem>
-// <DropdownItem onClick={this.colorSchemeAPICall('triad')}>triad</DropdownItem>
-// <DropdownItem onClick={this.colorSchemeAPICall('quad')}>quad</DropdownItem>
 
 
 const mapDispatchToProps = (dispatch) => ({

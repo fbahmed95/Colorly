@@ -8,40 +8,19 @@ export class StoryFilters extends React.Component {
   super(props);
   console.log(props);
   }
-  // state = {
-  //   calendarFocused: null
-  // };
-  // onDatesChange = ({ startDate, endDate }) => {
-  //   this.props.setStartDate(startDate);
-  //   this.props.setEndDate(endDate);
-  // };
-  // onFocusChange = (calendarFocused) => {
-  //   this.setState(() => ({ calendarFocused }));
-  // }
   onTextChange = (e) => {
     this.props.setTextFilter(e.target.value);
   };
-  // onSortChange = (e) => {
-  //   if (e.target.value === 'date') {
-  //     this.props.sortByDate();
-  //   } else if (e.target.value === 'amount') {
-  //     this.props.sortByAmount();
-  //   }
-  // };
   render() {
     return (
-      <div className="content-container">
-        <div className="input-group">
-          <div className="input-group__item">
+      <div className="filter-container">
             <input
               type="text"
               className="text-input-new"
-              placeholder="Search stories"
+              placeholder="search stories"
               value={this.props.filters.text}
               onChange={this.onTextChange}
             />
-          </div>
-        </div>
       </div>
     );
   }

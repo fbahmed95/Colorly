@@ -1,0 +1,227 @@
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700,800');
+//
+// .login-background{
+//   font-family: "Open Sans";
+//   background-size: cover;
+//   display: flex;
+//   align-items: center;
+//   height: 100vh;
+//   width: 100vw;
+//   justify-content: center;
+//   background-color: #FF0000;
+//
+//   -webkit-animation:colorchange 5s infinite alternate;
+//
+// }
+//
+// @-webkit-keyframes colorchange {
+//   0% {
+//
+//     background-color: #DB011D;
+//   }
+//
+//   25% {
+//     background-color: #C8002C;
+//   }
+//
+//   50% {
+//     background-color: #8A015F;
+//   }
+//
+//   75%{
+//     background-color: #450195;
+//   }
+//
+//   100% {
+//     background-color: #2502B0;
+//   }
+//
+// }
+//
+// .login-heading {
+//   font-weight: 800;
+//   width:100%;
+//   font-size: 110px;
+//   text-align: center;
+//   color: white;
+//   font-weight: bold;
+// }
+//
+// .buttons{
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   align-items: center;
+//   justify-content: center;
+// }
+//
+// .btn{
+//   letter-spacing: 4px;
+//   background-color: white;
+//   border-radius: 2%;
+//   width: 20%;
+//   margin: 4%;
+//   margin-top: 0;
+//   height: 50px;
+//   transition: 0.5s;
+//   box-shadow: 0 0 20px #eee;
+//   opacity: .5;
+// }
+//
+// .btn:hover {
+//   background-position: right center;
+//   opacity: 1;
+//   cursor: pointer;
+// }
+//
+//
+// .button-container{
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+//   align-items: center;
+//   justify-content: center;
+//
+// }
+//
+// .heading{
+//     display: flex;
+//     flex-direction: column;
+//     height: 50vh;
+// }
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700,800');
+
+.login-background{
+  font-family: "Open Sans";
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  background-color: white;
+}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn{
+  letter-spacing: 4px;
+  background-color: white;
+  border-radius: 2%;
+  width: 15%;
+  margin-top: 0;
+  height: 50px;
+  transition: 0.5s;
+  box-shadow: 0 0 20px #eee;
+  opacity: .5;
+}
+
+.btn:hover {
+  background-position: right center;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.button-container{
+  display: absolute;
+  width: 100%;
+  left:40%;
+  top: 0;
+  z-index: 10;
+  transform: translate3d(0, 0, 0);
+
+}
+
+html, body {
+  height: 100%;
+}
+
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  box-shadow: 0 2px 30px rgba(black, .2);
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.wave {
+  opacity: .4;
+  position: absolute;
+  top: 10%;
+  left: 45%;
+  background: #0af;
+  width: 700px;
+  height: 700px;
+  margin-left: -250px;
+  margin-top: -250px;
+  transform-origin: 50% 48%;
+  border-radius: 43%;
+  animation: drift 3000ms infinite linear;
+  background: linear-gradient(to right, #DB011D 0%, #2502B0 100%);
+
+}
+
+.wave.-three {
+  animation: drift 5000ms infinite linear;
+  background: linear-gradient(to right, #DB011D 0%, #2502B0 100%);
+
+}
+
+.wave.-two {
+  animation: drift 7000ms infinite linear;
+  opacity: .1;
+  background: linear-gradient(to right, #DB011D 0%, #2502B0 100%);
+}
+
+.box:after {
+  content: '';
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11;
+  transform: translate3d(0, 0, 0);
+}
+
+.title {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 1;
+  line-height: 200px;
+  margin-top: 50px;
+  text-align: center;
+  transform: translate3d(0, 0, 0);
+  color: white;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: .1em;
+  font-size: 100px;
+  text-shadow: 0 1px 0 rgba(black, .1);
+  text-indent: .3em;
+}
+.btn{
+  color: black;
+}
+
+@keyframes drift {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StoryListItem = ({ id, title, tags, colors}) => (
-  <div className="card">
+  <div className="my-card">
     <div className="card-colors">
       <div className="color color-1" style={{backgroundColor: colors[0] }}>
       </div>
@@ -18,13 +18,13 @@ const StoryListItem = ({ id, title, tags, colors}) => (
     </div>
     <div className="card-description">
       <div className="card-title">
-        <Link to={'/edit/' + id}><p>{title.toUpperCase()}</p></Link>
+        <Link to={'/edit/' + id} style={{ textDecoration: 'none', color:'black' }}><p>{title.toUpperCase()}</p></Link>
       </div>
       <div className="card-bottom">
-        <p><FontAwesomeIcon icon="heart" /> 350 </p>
       </div>
     </div>
   </div>
 );
 
 export default StoryListItem;
+// <p><FontAwesomeIcon icon="heart" /> 350 </p>
